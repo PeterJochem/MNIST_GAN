@@ -1,5 +1,5 @@
 # Description
-I implemented a generative adversarial network (GAN) trained on the MNIST handwritten digits dataset. I used Keras and Tensorflow to implement the genrator and discriminator networks.
+I implemented a generative adversarial network (GAN) trained on the MNIST handwritten digits dataset. I used Keras and Tensorflow to implement the generator and discriminator networks.
 
 # Results 
 The results are pretty stunning! They will not fool a human but they do clearly have some resemblance to the dataset's handwritten digits. 

@@ -31,7 +31,8 @@ evolution_vector = np.random.normal(0, 1, (1, 100) )
 
 imageIndex = 0
 
-# Video Generating function 
+# This takes all the images in the evolution directory and 
+# turns them into a video called evolution.avi 
 def generateVideo(): 
     image_folder = '.' # make sure to use your folder 
     video_name = 'evolution.avi'
@@ -42,10 +43,6 @@ def generateVideo():
                  img.endswith(".jpeg") or
                  img.endswith("png")] 
      
-    # Array images should only consider 
-    # the image files ignoring others if any 
-    # print(images)  
-  
     frame = cv2.imread(os.path.join(image_folder, images[0])) 
   
     # setting the frame width, height width 
@@ -54,21 +51,23 @@ def generateVideo():
   
     video = cv2.VideoWriter(video_name, 0, 1, (width, height))  
   
-    # Appending the images to the video one by one 
+    # Add all the images to the video 
     for i in range(len(images)): 
         
         imageName = str(i) + ".jpeg"
 
         video.write(cv2.imread(os.path.join(image_folder, imageName)))  
       
-    # Deallocating memories taken for window creation 
     cv2.destroyAllWindows()  
-    video.release()  # releasing the video generated 
-  
+    video.release()   
 
 
 # This takes the gan and creates image with it and plots them
 # into a grid of 4x4 images
+# generator is the generator neural network
+# grid_rows is the number of rows in the display grid
+# and grid columns is the number of columns in the grid columns
+# Retuns void
 def generate_images(generator, grid_rows = 4, grid_columns = 4):
     
     # Generate random input vector
@@ -182,15 +181,19 @@ for i in range(numEpochs):
     g_loss = gan.train_on_batch(z, real)
 
     if ( i % 100 == 0 ):
+        
         next_evolution = generator.predict(evolution_vector) 
+        
         # Rescale the pixel values into [0, 1]
         next_evolution = 0.5 * next_evolution + 0.5
         
         # Reshape the image into a 28 x 28 array
         next_evolution = np.reshape(next_evolution, (28, 28))
     
+        # Convert the image entries in [0, 1] into [0, 255]
         next_evolution = next_evolution * 255
 
+        # Convert from numpy array to an image format
         img = Image.fromarray(next_evolution)
         
         img = img.convert("L") 
