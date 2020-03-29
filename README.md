@@ -2,7 +2,8 @@
 I implemented a generative adversarial network (GAN) trained on the MNIST handwritten digits dataset. I used Keras and Tensorflow to implement the genrator and discriminator networks.
 
 # Results 
-The results are pretty stunning! I ran the algorithm on my laptop and got the following results in about 30 minutes. I only used networks with 2-3 hidden layers too! I am hoping to implement the same algorithm with two convolutional neural networks next. 
+The results are pretty stunning! They will not fool a human but they do clearly have some resemblance to the dataset's handwritten digits. 
+I only used networks with 2-3 hidden layers! A deper network should deliver more convinving results. Using two convolutional networks should also help too.
 
 ![MNIST GAN - Simple Multi Layer Perceptrons](https://github.com/PeterJochem/MNIST_GAN/blob/master/simpleNetworkResults.png  "MNIST GAN - Simple Multi Layer Perceptrons")
 
