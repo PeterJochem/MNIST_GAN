@@ -4,7 +4,7 @@ I implemented a generative adversarial network (GAN) trained on the MNIST handwr
 # Results 
 The results are pretty stunning! I ran the algorithm on my laptop and got the following results in about 30 minutes. I only used networks with 2-3 hidden layers too! I am hoping to implement the same algorithm with two convolutional neural networks next. 
 
-![MNIST GAN - Simple Multi Layer Perceptrons](   "MNIST GAN - Simple Multi Layer Perceptrons")
+![MNIST GAN - Simple Multi Layer Perceptrons](https://github.com/PeterJochem/MNIST_GAN/blob/master/simpleNetworkResults.png  "MNIST GAN - Simple Multi Layer Perceptrons")
 
 
 
