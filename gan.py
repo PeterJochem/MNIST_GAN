@@ -5,6 +5,9 @@ from keras.layers import Dense, Flatten, Reshape
 from keras.layers.advanced_activations import LeakyReLU
 from keras.models import Sequential
 from keras.optimizers import Adam
+import os 
+import cv2  
+from PIL import Image  
 
 # These define the shape of the MNIST images
 num_rows = 28
@@ -19,6 +22,50 @@ img_shape = (num_rows, num_columns, num_channels)
 
 # This is the size of the noise vector
 noise_vector_length = 100
+
+# Evolution vector
+# Store a random noise vector and use it as 
+# input to the generator after each training iteration of 
+# the generator
+evolution_vector = np.random.normal(0, 1, (1, 100) )
+
+imageIndex = 0
+
+# Video Generating function 
+def generateVideo(): 
+    image_folder = '.' # make sure to use your folder 
+    video_name = 'evolution.avi'
+    os.chdir("evolution") 
+      
+    images = [img for img in os.listdir(image_folder) 
+              if img.endswith(".jpg") or
+                 img.endswith(".jpeg") or
+                 img.endswith("png")] 
+     
+    # Array images should only consider 
+    # the image files ignoring others if any 
+    # print(images)  
+  
+    frame = cv2.imread(os.path.join(image_folder, images[0])) 
+  
+    # setting the frame width, height width 
+    # the width, height of first image 
+    height, width, layers = frame.shape   
+  
+    video = cv2.VideoWriter(video_name, 0, 1, (width, height))  
+  
+    # Appending the images to the video one by one 
+    for i in range(len(images)): 
+        
+        imageName = str(i) + ".jpeg"
+
+        video.write(cv2.imread(os.path.join(image_folder, imageName)))  
+      
+    # Deallocating memories taken for window creation 
+    cv2.destroyAllWindows()  
+    video.release()  # releasing the video generated 
+  
+
 
 # This takes the gan and creates image with it and plots them
 # into a grid of 4x4 images
@@ -133,10 +180,26 @@ for i in range(numEpochs):
     # weights to change so as to make the input (z) be classified
     # as a real image
     g_loss = gan.train_on_batch(z, real)
+
+    if ( i % 100 == 0 ):
+        next_evolution = generator.predict(evolution_vector) 
+        # Rescale the pixel values into [0, 1]
+        next_evolution = 0.5 * next_evolution + 0.5
+        
+        # Reshape the image into a 28 x 28 array
+        next_evolution = np.reshape(next_evolution, (28, 28))
     
+        next_evolution = next_evolution * 255
+
+        img = Image.fromarray(next_evolution)
+        
+        img = img.convert("L") 
+        img.save( "evolution/" + str(imageIndex) + '.jpeg')
+        imageIndex = imageIndex + 1
+
 
 # See what the generators learned
-generate_images(generator)
-plt.show()
-
+# generate_images(generator)
+# plt.show()
+generateVideo()
 
