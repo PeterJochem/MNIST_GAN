@@ -3,7 +3,7 @@ I implemented a generative adversarial network (GAN) trained on the MNIST handwr
 
 # Results 
 The results are pretty stunning! They will not fool a human but they do clearly have some resemblance to the dataset's handwritten digits. 
-I only used networks with 2-3 hidden layers! A deper network should deliver more convinving results. Using two convolutional networks should also help too.
+I only used networks with 2-3 hidden layers! A deeper network should deliver more convincing results. Using two convolutional networks should also help too.
 
 ![MNIST GAN - Simple Multi Layer Perceptrons](https://github.com/PeterJochem/MNIST_GAN/blob/master/simpleNetworkResults.png  "MNIST GAN - Simple Multi Layer Perceptrons")
 
