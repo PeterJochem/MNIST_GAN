@@ -22,7 +22,7 @@ noise_vector_length = 100
 
 # This takes the gan and creates image with it and plots them
 # into a grid of 4x4 images
-def sample_images(generator, grid_rows = 4, grid_columns = 4):
+def generate_images(generator, grid_rows = 4, grid_columns = 4):
     
     # Generate random input vector
     z = np.random.normal(0, 1, (grid_rows * grid_columns, noise_vector_length))
@@ -74,7 +74,7 @@ discriminator.add(Dense(1, activation ='sigmoid'))
 
 ###########################################################
 # Compile the two models which constitute the GAN
-discriminator.compile(loss='binary_crossentropy', optimizer = Adam(), metrics = ['accuracy'])
+discriminator.compile(loss = 'binary_crossentropy', optimizer = Adam(), metrics = ['accuracy'])
 
 # These keeps the weights from changing when we update the weights for the generator
 discriminator.trainable = False
@@ -86,10 +86,10 @@ gan = Sequential()
 gan.add(generator)
 gan.add(discriminator)
 
-gan.compile(loss='binary_crossentropy', optimizer=Adam() )
+gan.compile(loss = 'binary_crossentropy', optimizer=Adam() )
 
-batchSize = 5
-numEpochs = 1 # 10000
+batchSize = 30
+numEpochs = 10000
 
 # Train
 for i in range(numEpochs):
@@ -136,7 +136,7 @@ for i in range(numEpochs):
     
 
 # See what the generators learned
-sample_images(generator)
+generate_images(generator)
 plt.show()
 
 
