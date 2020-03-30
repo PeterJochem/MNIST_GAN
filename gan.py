@@ -137,10 +137,10 @@ gan = Sequential()
 gan.add(generator)
 gan.add(discriminator)
 
-gan.compile(loss = 'binary_crossentropy', optimizer=Adam() )
+gan.compile(loss = 'binary_crossentropy', optimizer = Adam() )
 
 batchSize = 30
-numEpochs = 1 # 10000
+numEpochs = 10000
 
 # Train
 for i in range(numEpochs):
@@ -204,6 +204,11 @@ for i in range(numEpochs):
         img = img.convert("L") 
         img.save( "evolution/" + str(imageIndex) + '.jpeg')
         imageIndex = imageIndex + 1
+        
+        # Save the network
+        generator.save('/home/peter/Desktop/GAN/models/generator.h5')
+        discriminator.save('/home/peter/Desktop/GAN/models/discriminator.h5')
+
 
 
 # See what the generators learned
@@ -212,7 +217,7 @@ plt.show()
 generateVideo()
 
 # Save the two networks
-gan.save('/home/peter/Desktop/GAN/models/gan.h5') 
+generator.save('/home/peter/Desktop/GAN/models/generator.h5') 
 discriminator.save('/home/peter/Desktop/GAN/models/discriminator.h5')
 
 
