@@ -1,10 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from keras.datasets import mnist
-from keras.layers import Dense, Flatten, Reshape
+from keras.layers import (
+Activation, BatchNormalization, Dense, Dropout, Flatten, Reshape)
 from keras.layers.advanced_activations import LeakyReLU
+from keras.layers.convolutional import Conv2D, Conv2DTranspose
 from keras.models import Sequential
 from keras.optimizers import Adam
+from keras.models import load_model
 import os 
 import cv2  
 from PIL import Image  
@@ -92,28 +95,30 @@ def generate_images(generator, grid_rows = 4, grid_columns = 4):
 ##########################################################
 # Create the Generator network
 generator = Sequential()
-generator.add(Dense(128, input_dim = noise_vector_length ))
+generator.add(Dense(256 * 7 * 7, input_dim = noise_vector_length))
+generator.add(Reshape((7, 7, 256)))
+generator.add(Conv2DTranspose(128, kernel_size = 3, strides = 2, padding = 'same'))
+generator.add(BatchNormalization())
 generator.add(LeakyReLU(alpha = 0.01))
+generator.add(Conv2DTranspose(64, kernel_size = 3, strides = 1, padding = 'same'))
+generator.add(BatchNormalization()) # Add Batch normalization
+generator.add(LeakyReLU(alpha = 0.01)) 
+generator.add(Conv2DTranspose(1, kernel_size = 3, strides = 2, padding = 'same'))
+generator.add(Activation('tanh'))
 
-generator.add(Dense(200))
-generator.add(LeakyReLU(alpha = 0.01))
-
-# Empirically, tanh tends to produce less blurry images
-generator.add(Dense(28 * 28 * 1, activation='tanh') )
-
-# Reformat the output from one vector shape to another
-# that the discriminator network can process
-generator.add(Reshape(img_shape))
-##########################################################
 
 # Create the discriminator network
 discriminator = Sequential()
-discriminator.add(Flatten(input_shape = img_shape))
-discriminator.add(Dense(128))
+discriminator.add( Conv2D(32, kernel_size = 3, strides = 2, input_shape = img_shape, padding='same'))
 discriminator.add(LeakyReLU(alpha = 0.01))
-discriminator.add(Dense(128))
+discriminator.add( Conv2D(64, kernel_size = 3, strides = 2, input_shape = img_shape, padding = 'same'))
+discriminator.add(BatchNormalization())
 discriminator.add(LeakyReLU(alpha = 0.01))
-discriminator.add(Dense(1, activation ='sigmoid'))
+discriminator.add( Conv2D(128, kernel_size = 3, strides = 2, input_shape = img_shape, padding = 'same'))
+discriminator.add(BatchNormalization())
+discriminator.add(LeakyReLU(alpha = 0.01))
+discriminator.add(Flatten())
+discriminator.add(Dense(1, activation = 'sigmoid'))
 
 ##########################################################
 
@@ -135,7 +140,7 @@ gan.add(discriminator)
 gan.compile(loss = 'binary_crossentropy', optimizer=Adam() )
 
 batchSize = 30
-numEpochs = 10000
+numEpochs = 1 # 10000
 
 # Train
 for i in range(numEpochs):
@@ -202,7 +207,12 @@ for i in range(numEpochs):
 
 
 # See what the generators learned
-# generate_images(generator)
-# plt.show()
+generate_images(generator)
+plt.show()
 generateVideo()
+
+# Save the two networks
+gan.save('/home/peter/Desktop/GAN/models/gan.h5') 
+discriminator.save('/home/peter/Desktop/GAN/models/discriminator.h5')
+
 
