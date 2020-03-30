@@ -7,6 +7,8 @@ I only used networks with 2-3 hidden layers! A deeper network should deliver mor
 
 ![MNIST GAN - Simple Multi Layer Perceptrons](https://github.com/PeterJochem/MNIST_GAN/blob/master/simpleNetworkResults.png  "MNIST GAN - Simple Multi Layer Perceptrons")
 
+
+This is the results of using convolutional networks! These images were produced by the generator. Wow, way better. Many of these could fool a human.
 ![MNIST GAN - Convolutional Multi Layer Perceptrons](https://github.com/PeterJochem/MNIST_GAN/blob/master/DCGAN_Results.png  "MNIST DCGAN")
 
 
