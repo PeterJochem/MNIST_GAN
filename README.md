@@ -16,7 +16,7 @@ This is a video of the generator evolving. Before starting to train the network,
 [![here](https://youtu.be/K0t_Qji7sWk)](https://youtu.be/K0t_Qji7sWk)
 
 This is a video of the convolutional generator evolving. Before starting to train the network, I create and store a random input vector for the generator. Every 100 training cycles, I forward prop this vector through the generator and store the resulting image. A video of all those images can be found
-[![here]()https://youtu.be/S1WODtScCKI](https://youtu.be/S1WODtScCKI)
+[![here](https://youtu.be/S1WODtScCKI)](https://youtu.be/S1WODtScCKI)
 
 
 # Tensorflow and Virtual Enviroment Setup
