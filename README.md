@@ -7,7 +7,7 @@ I only used networks with 2-3 hidden layers! A deeper network should deliver mor
 
 ![MNIST GAN - Simple Multi Layer Perceptrons](https://github.com/PeterJochem/MNIST_GAN/blob/master/simpleNetworkResults.png  "MNIST GAN - Simple Multi Layer Perceptrons")
 
-![MNIST GAN - Convolutional Multi Layer Perceptrons](  "MNIST DCGAN")
+![MNIST GAN - Convolutional Multi Layer Perceptrons](https://github.com/PeterJochem/MNIST_GAN/blob/master/DCGAN_Results.png  "MNIST DCGAN")
 
 
 This is a video of the generator evolving. Before starting to train the network, I create and store a random input vector for the generator. Every 100 training cycles, I forward prop this vector through the generator and store the resulting image. A video of all those images can be found 
